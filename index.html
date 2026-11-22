@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#eaf5ff">
+    <title>BlueCapture - Your Moment, Your Memory</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <svg class="icon-definitions" aria-hidden="true">
+        <symbol id="icon-sparkle" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 2.5 14.8 9.2 21.5 12l-6.7 2.8L12 21.5l-2.8-6.7L2.5 12l6.7-2.8L12 2.5Z"/>
+        </symbol>
+        <symbol id="icon-arrow-right" viewBox="0 0 24 24">
+            <path d="M4 12h15m-6-6 6 6-6 6"/>
+        </symbol>
+        <symbol id="icon-arrow-up-right" viewBox="0 0 24 24">
+            <path d="M7 17 17 7M8 7h9v9"/>
+        </symbol>
+        <symbol id="icon-arrow-down" viewBox="0 0 24 24">
+            <path d="M12 4v15m-6-6 6 6 6-6"/>
+        </symbol>
+        <symbol id="icon-arrow-left" viewBox="0 0 24 24">
+            <path d="M20 12H5m6 6-6-6 6-6"/>
+        </symbol>
+        <symbol id="icon-refresh" viewBox="0 0 24 24">
+            <path d="M20 7v5h-5M4 17v-5h5"/>
+            <path d="M5.5 9A7 7 0 0 1 18 6l2 2M4 16l2 2a7 7 0 0 0 12.5-3"/>
+        </symbol>
+        <symbol id="icon-menu" viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+        </symbol>
+        <symbol id="icon-camera" viewBox="0 0 24 24">
+            <path d="M4 7h4l2-3h4l2 3h4a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/>
+            <circle cx="12" cy="13" r="4"/>
+        </symbol>
+        <symbol id="icon-clock" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+        </symbol>
+        <symbol id="icon-palette" viewBox="0 0 24 24">
+            <path d="M12 3a9 9 0 1 0 0 18h1.2a2 2 0 0 0 1.5-3.3 1.6 1.6 0 0 1 1.2-2.7H18a3 3 0 0 0 3-3A9 9 0 0 0 12 3Z"/>
+            <circle cx="7.5" cy="11" r="1"/>
+            <circle cx="10" cy="7.5" r="1"/>
+            <circle cx="15" cy="7.5" r="1"/>
+        </symbol>
+        <symbol id="icon-heart" viewBox="0 0 24 24">
+            <path d="M20.8 8.8c0 4.5-8.8 10-8.8 10s-8.8-5.5-8.8-10A4.8 4.8 0 0 1 12 6.1a4.8 4.8 0 0 1 8.8 2.7Z"/>
+        </symbol>
+        <symbol id="icon-photo" viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="16" rx="2"/>
+            <circle cx="9" cy="10" r="1.5"/>
+            <path d="m4 17 5-5 4 4 3-3 4 4"/>
+        </symbol>
+        <symbol id="icon-rainbow" viewBox="0 0 24 24">
+            <path d="M3 19a9 9 0 0 1 18 0M7 19a5 5 0 0 1 10 0M11 19a1 1 0 0 1 2 0"/>
+        </symbol>
+        <symbol id="icon-flower" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 8.2c-2.1-4.9 2.8-6.6 3.8-3.6.5 1.4-.2 2.8-1.6 4.1 4.9-2.1 6.6 2.8 3.6 3.8-1.4.5-2.8-.2-4.1-1.6 2.1 4.9-2.8 6.6-3.8 3.6-.5-1.4.2-2.8 1.6-4.1-4.9 2.1-6.6-2.8-3.6-3.8 1.4-.5 2.8.2 4.1 1.6Z"/>
+            <circle cx="12" cy="12" r="2" fill="white"/>
+        </symbol>
+    </svg>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <a href="#" class="logo">
+            <span class="logo-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></span>
+            BlueCapture<span class="logo-dot">.</span>
+        </a>
+
+        <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#features">Features</a>
+        </nav>
+
+        <a href="#home" class="nav-button" id="navStart">Let's Capture <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-up-right"></use></svg></span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Buka menu"><svg class="ui-icon" aria-hidden="true"><use href="#icon-menu"></use></svg></button>
+    </header>
+
+    <!-- LANDING PAGE -->
+    <main id="landingPage">
+
+        <!-- HERO -->
+        <section class="hero section-container" id="home">
+            <div class="hero-content">
+                <div class="eyebrow">
+                    <svg class="ui-icon live-icon" viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="4"/></svg>
+                    YOUR PERSONAL PHOTO STUDIO
+                </div>
+
+                <h1>
+                    Capture Your<br>
+                    Moments, <span>Keep</span><br>
+                    Them Forever.
+                </h1>
+
+                <p class="hero-description">
+                    Turn your little moments into beautiful memories.
+                    Take photos, explore creative filters, and make
+                    your own photobooth memories with BlueCapture.
+                </p>
+
+                <div class="hero-actions">
+                    <button class="primary-button" id="heroStart">
+                        Start Photobooth <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg></span>
+                    </button>
+                    <a href="#how-it-works" class="secondary-button">
+                        How it works <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-down"></use></svg></span>
+                    </a>
+                </div>
+
+                <div class="hero-note">
+                    <svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg> No account needed. Just you and your moments.
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="floating-star star-one"><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></div>
+                <div class="floating-star star-two"><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></div>
+
+                <div class="hero-photo-card">
+                    <div class="photo-top">
+                        <span>BLUECAPTURE STUDIO</span>
+                        <span><svg class="ui-icon record-dot" viewBox="0 0 8 8" aria-hidden="true"><circle cx="4" cy="4" r="3.5"/></svg> REC</span>
+                    </div>
+
+                    <div class="photo-collage">
+                        <div class="sample-photo photo-one">
+                            <span>01</span>
+                        </div>
+                        <div class="sample-photo photo-two">
+                            <span>02</span>
+                        </div>
+                        <div class="sample-photo photo-three">
+                            <span>03</span>
+                        </div>
+                    </div>
+
+                    <div class="photo-bottom">
+                        <span><svg class="ui-icon" aria-hidden="true"><use href="#icon-heart"></use></svg> LITTLE MOMENTS</span>
+                        <span>2026</span>
+                    </div>
+                </div>
+
+                <div class="floating-label">
+                    <svg class="ui-icon" aria-hidden="true"><use href="#icon-flower"></use></svg>
+                    Make it memorable!
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-section" id="how-it-works">
+            <div class="section-container">
+                <div class="section-heading">
+                    <span class="section-tag">SIMPLE & FUN</span>
+                    <h2>How It <span>Works</span></h2>
+                    <p>Four simple steps to create your own beautiful memories.</p>
+                </div>
+
+                <div class="steps-grid">
+                    <article class="step-card">
+                        <div class="step-number">01</div>
+                        <div class="step-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-camera"></use></svg></div>
+                        <h3>Allow Camera</h3>
+                        <p>Give permission to access your camera and get ready to capture your moments.</p>
+                    </article>
+
+                    <article class="step-card">
+                        <div class="step-number">02</div>
+                        <div class="step-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-clock"></use></svg></div>
+                        <h3>Take Your Photos</h3>
+                        <p>Get ready and let the countdown capture your best expressions.</p>
+                    </article>
+
+                    <article class="step-card">
+                        <div class="step-number">03</div>
+                        <div class="step-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-palette"></use></svg></div>
+                        <h3>Make It Yours</h3>
+                        <p>Choose filters, add stickers, and customize your photo strip.</p>
+                    </article>
+
+                    <article class="step-card">
+                        <div class="step-number">04</div>
+                        <div class="step-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-heart"></use></svg></div>
+                        <h3>Save Your Memories</h3>
+                        <p>Preview your creation and download your favorite photobooth result.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURES -->
+        <section class="features-section" id="features">
+            <div class="section-container">
+                <div class="section-heading">
+                    <span class="section-tag">CREATE SOMETHING SPECIAL</span>
+                    <h2>Make Every Shot <span>Unique</span></h2>
+                    <p>Everything you need to create your own photobooth experience.</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span><svg class="ui-icon" aria-hidden="true"><use href="#icon-camera"></use></svg></span>
+                        <h3>Live Camera</h3>
+                        <p>Capture photos directly from your device camera.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span><svg class="ui-icon" aria-hidden="true"><use href="#icon-rainbow"></use></svg></span>
+                        <h3>Photo Filters</h3>
+                        <p>Explore different looks for every photo.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></span>
+                        <h3>Cute Stickers</h3>
+                        <p>Add fun decorations to your memories.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span><svg class="ui-icon" aria-hidden="true"><use href="#icon-photo"></use></svg></span>
+                        <h3>Photo Frames</h3>
+                        <p>Customize the frame color of your photo strip.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <span><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg> YOUR MOMENT STARTS HERE <svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></span>
+                <h2>Ready to Capture<br>Your Happy Moments?</h2>
+                <p>Your memories deserve a beautiful frame.</p>
+                <button class="primary-button" id="ctaStart">
+                    Let's Take Photos <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg></span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PHOTOBOOTH PAGE -->
+    <main id="boothPage" class="booth-page hidden">
+
+        <div class="booth-header">
+            <button class="back-button" id="backHome"><span class="button-icon button-icon-leading"><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-left"></use></svg></span> Back to Home</button>
+            <div class="booth-title">
+                <span class="logo-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></span>
+                BlueCapture Studio
+            </div>
+            <span class="studio-label">PHOTO STUDIO</span>
+        </div>
+
+        <div class="booth-container">
+
+            <div class="section-heading booth-heading">
+                <span class="section-tag">YOUR MOMENT, YOUR MEMORY</span>
+                <h2>Let's Take Some <span>Photos!</span></h2>
+                <p>Get ready, smile, and enjoy your photobooth experience.</p>
+            </div>
+
+            <!-- CAMERA AREA -->
+            <section class="camera-card" id="cameraSection">
+                <div class="camera-topbar">
+                    <span><svg class="ui-icon live-icon" viewBox="0 0 10 10" aria-hidden="true"><circle cx="5" cy="5" r="4"/></svg> CAMERA PREVIEW</span>
+                    <span id="cameraStatus" class="camera-status">NOT CONNECTED</span>
+                </div>
+
+                <div class="camera-view">
+                    <video id="video" autoplay playsinline muted></video>
+                    <img class="shot-preview hidden" id="shotPreview" alt="Captured photo preview">
+                    <div class="camera-placeholder" id="cameraPlaceholder">
+                        <div class="placeholder-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-camera"></use></svg></div>
+                        <h3>Your camera is waiting</h3>
+                        <p>Allow camera access to start your session.</p>
+                    </div>
+                    <div class="countdown" id="countdown"></div>
+                </div>
+
+                <div class="camera-controls">
+                    <button class="primary-button" id="startCamera">
+                        Enable Camera <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg></span>
+                    </button>
+                    <button class="primary-button hidden" id="captureButton">
+                        Start Capture <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></span>
+                    </button>
+                    <button class="secondary-button hidden" id="retakeShotButton">
+                        Retake <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-refresh"></use></svg></span>
+                    </button>
+                </div>
+
+                <p class="camera-tip"><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg> Make sure your face is visible and the lighting is good!</p>
+            </section>
+
+            <!-- CAPTURED PHOTOS -->
+            <section class="captured-section">
+                <div class="content-title">
+                    <div>
+                        <span class="section-tag">YOUR PHOTOS</span>
+                        <h2>Captured Moments <span id="photoCount">(0/3)</span></h2>
+                    </div>
+                    <button class="text-button" id="retakeButton">Retake All <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-refresh"></use></svg></span></button>
+                </div>
+
+                <div class="captured-grid" id="capturedGrid">
+                    <div class="empty-photo">01</div>
+                    <div class="empty-photo">02</div>
+                    <div class="empty-photo">03</div>
+                </div>
+            </section>
+
+            <!-- EDITOR -->
+            <section class="editor-section hidden" id="editorSection">
+                <div class="section-heading">
+                    <span class="section-tag">PERSONALIZE YOUR CREATION</span>
+                    <h2>Customize Your <span>Photo Strip</span></h2>
+                </div>
+
+                <div class="editor-layout">
+                    <div class="editor-preview">
+                        <canvas id="previewCanvas"></canvas>
+                    </div>
+
+                    <div class="editor-controls">
+                        <div class="control-group">
+                            <label for="filterSelect">Photo Filter</label>
+                            <select id="filterSelect">
+                                <option value="none">Original</option>
+                                <option value="vintage">Vintage</option>
+                                <option value="grayscale">Grayscale</option>
+                                <option value="warm">Warm</option>
+                                <option value="cool">Cool</option>
+                                <option value="dreamy">Dreamy</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="layoutSelect">Photo Layout</label>
+                            <select id="layoutSelect">
+                                <option value="3">Classic Strip (3 Photos)</option>
+                                <option value="4">Long Strip (4 Photos)</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="themeSelect">Frame Theme</label>
+                            <select id="themeSelect">
+                                <option value="classic">Classic</option>
+                                <option value="color-pop">Color Pop</option>
+                                <option value="botanical">Botanical</option>
+                                <option value="skyline">Skyline</option>
+                                <option value="starlight">Starlight</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="frameSelect">Frame Color</label>
+                            <select id="frameSelect">
+                                <option value="#ffffff">Classic White</option>
+                                <option value="#dceeff">Pastel Blue</option>
+                                <option value="#a9d3f5">Sky Blue</option>
+                                <option value="#263e63">Navy Blue</option>
+                                <option value="#fce7f0">Baby Pink</option>
+                                <option value="#dff4e8">Mint Green</option>
+                                <option value="#eee6ff">Lavender</option>
+                                <option value="#ffe8d6">Peach</option>
+                                <option value="#dfe8dc">Sage Green</option>
+                                <option value="#fff3c4">Butter Yellow</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="stickerSelect">Decorations</label>
+                            <select id="stickerSelect">
+                                <option value="">No Sticker</option>
+                                <option value="💙">Blue Heart 💙</option>
+                                <option value="⭐">Star ⭐</option>
+                                <option value="🌸">Flower 🌸</option>
+                                <option value="🦋">Butterfly 🦋</option>
+                                <option value="✨">Sparkles ✨</option>
+                            </select>
+                        </div>
+
+                        <div class="editor-actions">
+                            <button class="primary-button" id="downloadButton">
+                                Download Photo <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-down"></use></svg></span>
+                            </button>
+                            <button class="secondary-button" id="restartButton">
+                                Take New Photos <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-refresh"></use></svg></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <a href="#" class="logo">
+            <span class="logo-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></span>
+            BlueCapture<span class="logo-dot">.</span>
+        </a>
+        <p>Made with <svg class="ui-icon" aria-hidden="true"><use href="#icon-heart"></use></svg> for your little moments.</p>
+        <span>© 2026 Perdi. All rights reserved.</span>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
