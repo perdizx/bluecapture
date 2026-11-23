@@ -1054,6 +1054,10 @@ a {
         aspect-ratio: 4 / 3;
     }
 
+    .camera-view video {
+        object-fit: cover;
+    }
+
     .camera-placeholder h3 {
         font-size: 16px;
     }
