@@ -9,6 +9,7 @@ const boothPage = document.getElementById("boothPage");
 const navbar = document.querySelector(".navbar");
 
 const video = document.getElementById("video");
+const cameraView = document.querySelector(".camera-view");
 const cameraPlaceholder = document.getElementById("cameraPlaceholder");
 const cameraStatus = document.getElementById("cameraStatus");
 const shotPreview = document.getElementById("shotPreview");
@@ -176,6 +177,16 @@ captureCountSelect.addEventListener("change", () => {
 // CAMERA
 // =====================================
 
+function syncMobileCameraAspectRatio() {
+    if (window.matchMedia("(max-width: 600px)").matches && video.videoWidth && video.videoHeight) {
+        cameraView.style.aspectRatio = `${video.videoWidth} / ${video.videoHeight}`;
+    } else {
+        cameraView.style.removeProperty("aspect-ratio");
+    }
+}
+
+window.addEventListener("resize", syncMobileCameraAspectRatio);
+
 async function enableCamera() {
     try {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -198,6 +209,7 @@ async function enableCamera() {
         video.srcObject = cameraStream;
 
         await video.play();
+        syncMobileCameraAspectRatio();
 
         video.style.display = "block";
         cameraPlaceholder.classList.add("hidden");
@@ -494,8 +506,28 @@ async function renderPhotoStrip() {
         padding +
         footerHeight;
 
-    previewCanvas.width = frameWidth;
-    previewCanvas.height = frameHeight;
+    const canvasWidth = isSixPhotoLayout ? frameWidth : 736;
+    const canvasHeight = isSixPhotoLayout ? frameHeight : 1308;
+    const frameScale = isSixPhotoLayout
+        ? 1
+        : Math.min(
+            (canvasWidth - 80) / frameWidth,
+            (canvasHeight - 80) / frameHeight
+        );
+    const frameX = (canvasWidth - frameWidth * frameScale) / 2;
+    const frameY = (canvasHeight - frameHeight * frameScale) / 2;
+
+    previewCanvas.width = canvasWidth;
+    previewCanvas.height = canvasHeight;
+
+    if (!isSixPhotoLayout) {
+        ctx.fillStyle = "#f4f6f8";
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    }
+
+    ctx.save();
+    ctx.translate(frameX, frameY);
+    ctx.scale(frameScale, frameScale);
 
     // FRAME BACKGROUND
     const gradientColors = frameGradients[frameColor];
@@ -582,6 +614,7 @@ async function renderPhotoStrip() {
         }
     }
 
+    ctx.restore();
 }
 
 // =====================================
