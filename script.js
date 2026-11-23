@@ -18,9 +18,6 @@ const captureButton = document.getElementById("captureButton");
 const retakeShotButton = document.getElementById("retakeShotButton");
 const countdown = document.getElementById("countdown");
 
-const capturedGrid = document.getElementById("capturedGrid");
-const photoCount = document.getElementById("photoCount");
-
 const editorSection = document.getElementById("editorSection");
 const previewCanvas = document.getElementById("previewCanvas");
 const ctx = previewCanvas.getContext("2d");
@@ -30,6 +27,8 @@ const layoutSelect = document.getElementById("layoutSelect");
 const themeSelect = document.getElementById("themeSelect");
 const frameSelect = document.getElementById("frameSelect");
 const stickerSelect = document.getElementById("stickerSelect");
+const mirrorButton = document.getElementById("mirrorButton");
+const roundedButton = document.getElementById("roundedButton");
 
 const downloadButton = document.getElementById("downloadButton");
 
@@ -38,6 +37,8 @@ let cameraStream = null;
 let capturedPhotos = [];
 let totalPhotos = 3;
 let isCapturing = false;
+let mirrorPhotos = true;
+let roundedPhotos = false;
 
 const PHOTO_WIDTH = 640;
 const PHOTO_HEIGHT = 480;
@@ -75,11 +76,6 @@ function backToHome() {
 }
 
 document.getElementById("heroStart").addEventListener("click", openPhotobooth);
-document.getElementById("ctaStart").addEventListener("click", openPhotobooth);
-document.getElementById("navStart").addEventListener("click", (e) => {
-    e.preventDefault();
-    openPhotobooth();
-});
 
 document.getElementById("backHome").addEventListener("click", backToHome);
 
@@ -111,7 +107,7 @@ countWrapper.innerHTML = `
     <label for="captureCountSelect">Number of Photos</label>
     <select id="captureCountSelect">
         <option value="3">3 Photos</option>
-        <option value="4">4 Photos</option>
+        <option value="6">6 Photos</option>
     </select>
 `;
 
@@ -168,9 +164,10 @@ captureCountSelect.addEventListener("change", () => {
 
     layoutSelect.innerHTML = `
         <option value="${totalPhotos}">
-            Classic Strip (${totalPhotos} Photos)
+            ${totalPhotos === 6 ? "Two-Column Frame" : "Classic Strip"} (${totalPhotos} Photos)
         </option>
     `;
+    layoutSelect.value = String(totalPhotos);
 
     resetPhotos();
 });
@@ -191,8 +188,9 @@ async function enableCamera() {
         cameraStream = await navigator.mediaDevices.getUserMedia({
             video: {
                 facingMode: "user",
-                width: { ideal: 1280 },
-                height: { ideal: 720 }
+                    width: { ideal: 640 },
+                    height: { ideal: 480 },
+                    aspectRatio: { ideal: 4 / 3 }
             },
             audio: false
         });
@@ -258,6 +256,7 @@ async function runCountdown() {
 
 function reviewPhoto(photo) {
     shotPreview.src = photo;
+    shotPreview.style.transform = mirrorPhotos ? "scaleX(-1)" : "none";
     shotPreview.classList.remove("hidden");
     video.style.display = "none";
     captureButton.classList.add("hidden");
@@ -306,35 +305,23 @@ function takePhoto() {
     canvas.height = PHOTO_HEIGHT;
 
     const photoContext = canvas.getContext("2d");
-    const targetAspect = PHOTO_WIDTH / PHOTO_HEIGHT;
-    const sourceAspect = video.videoWidth / video.videoHeight;
-    let sourceX = 0;
-    let sourceY = 0;
-    let sourceWidth = video.videoWidth;
-    let sourceHeight = video.videoHeight;
+    const sourceWidth = video.videoWidth;
+    const sourceHeight = video.videoHeight;
+    const scale = Math.min(PHOTO_WIDTH / sourceWidth, PHOTO_HEIGHT / sourceHeight);
+    const drawWidth = sourceWidth * scale;
+    const drawHeight = sourceHeight * scale;
+    const drawX = (PHOTO_WIDTH - drawWidth) / 2;
+    const drawY = (PHOTO_HEIGHT - drawHeight) / 2;
 
-    if (sourceAspect > targetAspect) {
-        sourceWidth = sourceHeight * targetAspect;
-        sourceX = (video.videoWidth - sourceWidth) / 2;
-    } else {
-        sourceHeight = sourceWidth / targetAspect;
-        sourceY = (video.videoHeight - sourceHeight) / 2;
-    }
-
-    // Mirror foto agar sesuai tampilan kamera selfie.
-    photoContext.translate(PHOTO_WIDTH, 0);
-    photoContext.scale(-1, 1);
+    photoContext.fillStyle = "#172a43";
+    photoContext.fillRect(0, 0, PHOTO_WIDTH, PHOTO_HEIGHT);
 
     photoContext.drawImage(
         video,
-        sourceX,
-        sourceY,
-        sourceWidth,
-        sourceHeight,
-        0,
-        0,
-        PHOTO_WIDTH,
-        PHOTO_HEIGHT
+        drawX,
+        drawY,
+        drawWidth,
+        drawHeight
     );
 
     return canvas.toDataURL("image/png");
@@ -358,8 +345,6 @@ async function startCapture() {
 
     editorSection.classList.add("hidden");
 
-    renderCapturedPhotos();
-
     for (let i = 0; i < totalPhotos; i++) {
         let photo;
         let accepted = false;
@@ -371,8 +356,6 @@ async function startCapture() {
         }
 
         capturedPhotos.push(photo);
-        renderCapturedPhotos();
-
         if (i < totalPhotos - 1) {
             await wait(700);
         }
@@ -399,36 +382,6 @@ async function startCapture() {
 captureButton.addEventListener("click", startCapture);
 
 // =====================================
-// RENDER CAPTURED PHOTOS
-// =====================================
-
-function renderCapturedPhotos() {
-    capturedGrid.innerHTML = "";
-
-    photoCount.textContent = `(${capturedPhotos.length}/${totalPhotos})`;
-
-    for (let i = 0; i < totalPhotos; i++) {
-        if (capturedPhotos[i]) {
-            const img = document.createElement("img");
-
-            img.src = capturedPhotos[i];
-            img.alt = `Captured photo ${i + 1}`;
-            img.className = "captured-photo";
-
-            capturedGrid.appendChild(img);
-
-        } else {
-            const placeholder = document.createElement("div");
-
-            placeholder.className = "empty-photo";
-            placeholder.textContent = String(i + 1).padStart(2, "0");
-
-            capturedGrid.appendChild(placeholder);
-        }
-    }
-}
-
-// =====================================
 // PHOTO FILTER
 // =====================================
 
@@ -451,6 +404,14 @@ const frameThemes = {
     botanical: { color: "#dff4e8", accent: "#496b55", detail: "#9ab98d", pattern: "leaves" },
     skyline: { color: "#dceeff", accent: "#2879b8", detail: "#64c7d7", pattern: "rings" },
     starlight: { color: "#eee6ff", accent: "#7552a0", detail: "#e5ad46", pattern: "diamonds" }
+};
+
+const frameGradients = {
+    "gradient-sunset": ["#ffd1dc", "#fff1c1"],
+    "gradient-sky": ["#cdeeff", "#e6dcff"],
+    "gradient-mint": ["#c9f2df", "#d8f3ff"],
+    "gradient-peach": ["#ffdcc8", "#f7d8f0"],
+    "gradient-lavender": ["#ded4ff", "#ffe0ef"]
 };
 
 function drawThemeDetails(theme, width, height) {
@@ -514,49 +475,78 @@ async function renderPhotoStrip() {
     const sticker = stickerSelect.value;
     const filter = getFilter();
 
-    const width = 420;
+    const isSixPhotoLayout = photos.length === 6;
+    const frameWidth = isSixPhotoLayout ? 800 : 420;
     const photoWidth = 360;
     const photoHeight = 270;
 
     const padding = 30;
     const gap = 18;
-    const headerHeight = 80;
-    const footerHeight = 95;
-
-    const height =
+    const headerHeight = 95;
+    const footerHeight = 20;
+    const columns = isSixPhotoLayout ? 2 : 1;
+    const rows = Math.ceil(photos.length / columns);
+    const frameHeight =
         headerHeight +
         padding +
-        (photos.length * photoHeight) +
-        ((photos.length - 1) * gap) +
+        (rows * photoHeight) +
+        ((rows - 1) * gap) +
         padding +
         footerHeight;
 
-    previewCanvas.width = width;
-    previewCanvas.height = height;
+    previewCanvas.width = frameWidth;
+    previewCanvas.height = frameHeight;
 
     // FRAME BACKGROUND
-    ctx.fillStyle = frameColor;
-    ctx.fillRect(0, 0, width, height);
-    drawThemeDetails(theme, width, height);
+    const gradientColors = frameGradients[frameColor];
+    if (gradientColors) {
+        const gradient = ctx.createLinearGradient(0, 0, frameWidth, frameHeight);
+        gradient.addColorStop(0, gradientColors[0]);
+        gradient.addColorStop(1, gradientColors[1]);
+        ctx.fillStyle = gradient;
+    } else {
+        ctx.fillStyle = frameColor;
+    }
+    ctx.fillRect(0, 0, frameWidth, frameHeight);
+    drawThemeDetails(theme, frameWidth, frameHeight);
 
     // HEADER
     ctx.fillStyle = theme.accent;
     ctx.textAlign = "center";
     ctx.font = "bold 21px sans-serif";
-    ctx.fillText("BLUECAPTURE", width / 2, 38);
+    ctx.fillText("BLUECAPTURE", frameWidth / 2, 58);
 
     ctx.font = "11px sans-serif";
-    ctx.fillText("YOUR LITTLE MOMENTS", width / 2, 59);
+    ctx.fillText("YOUR LITTLE MOMENTS", frameWidth / 2, 76);
 
     // PHOTOS
     for (let i = 0; i < photos.length; i++) {
-        const x = (width - photoWidth) / 2;
-        const y = headerHeight + padding +
-            i * (photoHeight + gap);
+        const column = isSixPhotoLayout ? Math.floor(i / 3) : 0;
+        const row = isSixPhotoLayout ? i % 3 : i;
+        const x = isSixPhotoLayout
+            ? padding + column * (photoWidth + gap)
+            : (frameWidth - photoWidth) / 2;
+        const y = headerHeight + padding + row * (photoHeight + gap);
 
         ctx.save();
 
         ctx.filter = filter;
+        if (roundedPhotos) {
+            const radius = 24;
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.arcTo(x + photoWidth, y, x + photoWidth, y + photoHeight, radius);
+            ctx.arcTo(x + photoWidth, y + photoHeight, x, y + photoHeight, radius);
+            ctx.arcTo(x, y + photoHeight, x, y, radius);
+            ctx.arcTo(x, y, x + photoWidth, y, radius);
+            ctx.closePath();
+            ctx.clip();
+        }
+
+        if (mirrorPhotos) {
+            ctx.translate(x * 2 + photoWidth, 0);
+            ctx.scale(-1, 1);
+        }
 
         ctx.drawImage(
             photos[i],
@@ -592,24 +582,6 @@ async function renderPhotoStrip() {
         }
     }
 
-    // FOOTER
-    ctx.fillStyle = theme.accent;
-    ctx.textAlign = "center";
-    ctx.font = "bold 14px sans-serif";
-
-    ctx.fillText(
-        "CAPTURED WITH LOVE ♡",
-        width / 2,
-        height - 52
-    );
-
-    ctx.font = "11px sans-serif";
-
-    ctx.fillText(
-        new Date().toLocaleDateString("id-ID"),
-        width / 2,
-        height - 30
-    );
 }
 
 // =====================================
@@ -625,6 +597,21 @@ themeSelect.addEventListener("change", () => {
 });
 
 layoutSelect.addEventListener("change", renderPhotoStrip);
+
+mirrorButton.addEventListener("click", () => {
+    mirrorPhotos = !mirrorPhotos;
+    mirrorButton.setAttribute("aria-pressed", String(mirrorPhotos));
+    mirrorButton.textContent = `Mirror Photos: ${mirrorPhotos ? "On" : "Off"}`;
+    shotPreview.style.transform = mirrorPhotos ? "scaleX(-1)" : "none";
+    renderPhotoStrip();
+});
+
+roundedButton.addEventListener("click", () => {
+    roundedPhotos = !roundedPhotos;
+    roundedButton.setAttribute("aria-pressed", String(roundedPhotos));
+    roundedButton.textContent = `Rounded Photos: ${roundedPhotos ? "On" : "Off"}`;
+    renderPhotoStrip();
+});
 
 // =====================================
 // DOWNLOAD PHOTO
@@ -655,21 +642,10 @@ function resetPhotos() {
 
     capturedPhotos = [];
 
-    renderCapturedPhotos();
-
     editorSection.classList.add("hidden");
 
     captureButton.innerHTML = `Start Capture <span class="button-icon">${iconMarkup("sparkle")}</span>`;
 }
-
-document.getElementById("retakeButton").addEventListener("click", () => {
-    resetPhotos();
-
-    capturedGrid.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
-});
 
 document.getElementById("restartButton").addEventListener("click", () => {
     resetPhotos();
@@ -686,4 +662,3 @@ function cameraSectionScroll() {
 
 // INITIALIZATION
 totalPhotos = Number(captureCountSelect.value);
-renderCapturedPhotos();
