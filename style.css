@@ -102,14 +102,22 @@ a {
 }
 
 .logo-icon {
+    width: 30px;
+    height: 30px;
     color: var(--primary);
     display: inline-flex;
     align-items: center;
+    flex: 0 0 30px;
+    overflow: hidden;
+    border-radius: 8px;
 }
 
-.logo-icon .ui-icon {
-    width: 27px;
-    height: 27px;
+.logo-icon img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
 }
 
 .logo-dot {
@@ -171,6 +179,9 @@ a {
 /* BUTTONS */
 
 .primary-button {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
     border: none;
     border-radius: 30px;
     background: var(--primary-dark);
@@ -263,8 +274,7 @@ a {
 }
 
 .hero h1 span,
-.section-heading h2 span,
-.content-title h2 span {
+.section-heading h2 span {
     color: var(--primary);
 }
 
@@ -544,6 +554,10 @@ a {
     padding: 85px 20px;
 }
 
+.app-download-section {
+    background: white;
+}
+
 .cta-content > span {
     font-size: 11px;
     font-weight: 800;
@@ -621,11 +635,11 @@ a {
 
 .booth-container {
     width: min(1000px, 90%);
-    margin: 65px auto;
+    margin: 25px auto 45px;
 }
 
 .booth-heading {
-    margin-bottom: 35px;
+    margin-bottom: 20px;
 }
 
 .camera-card {
@@ -634,6 +648,8 @@ a {
     border-radius: 20px;
     padding: 22px;
     box-shadow: var(--shadow);
+    max-width: 760px;
+    margin: 0 auto;
 }
 
 .camera-topbar {
@@ -664,8 +680,10 @@ a {
 }
 
 .camera-view {
-    width: 100%;
-    aspect-ratio: 16 / 9;
+    width: min(100%, 64vh);
+    max-width: 720px;
+    margin: 0 auto;
+    aspect-ratio: 4 / 3;
     background: #172a43;
     border-radius: 12px;
     position: relative;
@@ -678,7 +696,7 @@ a {
 .camera-view video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     transform: scaleX(-1);
     display: none;
 }
@@ -688,7 +706,7 @@ a {
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .camera-placeholder {
@@ -720,10 +738,13 @@ a {
 
 .countdown {
     position: absolute;
+    left: 20px;
+    bottom: 15px;
     color: white;
     font-family: 'Outfit', sans-serif;
-    font-size: clamp(70px, 15vw, 130px);
+    font-size: clamp(36px, 7vw, 64px);
     font-weight: 800;
+    line-height: 1;
     text-shadow: 0 5px 30px rgba(0,0,0,.4);
     z-index: 5;
 }
@@ -737,7 +758,7 @@ a {
     display: flex;
     justify-content: center;
     gap: 12px;
-    padding: 25px 0 10px;
+    padding: 15px 0 5px;
 }
 
 .camera-tip {
@@ -749,56 +770,6 @@ a {
 
 .camera-tip .ui-icon {
     color: var(--primary);
-}
-
-/* CAPTURED */
-
-.captured-section {
-    margin-top: 65px;
-}
-
-.content-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-.content-title h2 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 24px;
-    margin-top: 7px;
-}
-
-#photoCount {
-    font-size: 13px;
-    color: var(--muted);
-}
-
-.captured-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
-}
-
-.empty-photo, .captured-photo {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    border-radius: 13px;
-    background: #e5f0fa;
-    border: 1px dashed #a9c8e5;
-    display: grid;
-    place-items: center;
-    color: #8db5d8;
-    font-size: 25px;
-    font-weight: 800;
-    overflow: hidden;
-}
-
-.captured-photo {
-    border: none;
-    object-fit: cover;
 }
 
 /* EDITOR */
@@ -857,6 +828,18 @@ a {
 .control-group label {
     font-size: 13px;
     font-weight: 700;
+}
+
+.photo-option-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.photo-option-buttons .secondary-button {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 10px;
+    font-size: 12px;
 }
 
 .control-group select {
@@ -1080,19 +1063,6 @@ a {
     .camera-controls .primary-button,
     .camera-controls .secondary-button {
         width: 100%;
-    }
-
-    .captured-section {
-        margin-top: 45px;
-    }
-
-    .content-title h2 {
-        font-size: 19px;
-    }
-
-    .captured-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
     }
 
     .editor-section {
