@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#eaf5ff">
     <title>BlueCapture - Your Moment, Your Memory</title>
+    <link rel="icon" type="image/png" href="icon-rounded.png">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,7 +70,7 @@
     <!-- NAVBAR -->
     <header class="navbar">
         <a href="#" class="logo">
-            <span class="logo-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></span>
+            <span class="logo-icon"><img src="icon-rounded.png" alt=""></span>
             BlueCapture<span class="logo-dot">.</span>
         </a>
 
@@ -79,7 +80,7 @@
             <a href="#features">Features</a>
         </nav>
 
-        <a href="#home" class="nav-button" id="navStart">Let's Capture <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-up-right"></use></svg></span></a>
+        <a href="#download-app" class="nav-button">Get the App <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-down"></use></svg></span></a>
         <button class="menu-toggle" id="menuToggle" aria-label="Buka menu"><svg class="ui-icon" aria-hidden="true"><use href="#icon-menu"></use></svg></button>
     </header>
 
@@ -230,15 +231,27 @@
             </div>
         </section>
 
+        <!-- APP DOWNLOAD -->
+        <section class="cta-section app-download-section" id="download-app">
+            <div class="cta-content">
+                <span><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg> BLUECAPTURE FOR ANDROID <svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></span>
+                <h2>Make It Simple.<br>Make It Memorable.</h2>
+                <p>Capture, customize, and save your favorite moments with just a few taps.</p>
+                <a class="primary-button" href="bluecapture.apk" download="bluecapture.apk">
+                    Download for Android <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-down"></use></svg></span>
+                </a>
+            </div>
+        </section>
+
         <!-- CTA -->
         <section class="cta-section">
             <div class="cta-content">
-                <span><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg> YOUR MOMENT STARTS HERE <svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></span>
-                <h2>Ready to Capture<br>Your Happy Moments?</h2>
-                <p>Your memories deserve a beautiful frame.</p>
-                <button class="primary-button" id="ctaStart">
-                    Let's Take Photos <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg></span>
-                </button>
+                <span><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg> FEEDBACK &amp; SUGGESTIONS <svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></span>
+                <h2>Have Feedback or<br>Suggestions for Us?</h2>
+                <p>Help us make BlueCapture even better.</p>
+                <a class="primary-button" href="https://perdipratama.my.id" target="_blank" rel="noopener noreferrer">
+                    Send Feedback <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg></span>
+                </a>
             </div>
         </section>
 
@@ -250,7 +263,7 @@
         <div class="booth-header">
             <button class="back-button" id="backHome"><span class="button-icon button-icon-leading"><svg class="ui-icon" aria-hidden="true"><use href="#icon-arrow-left"></use></svg></span> Back to Home</button>
             <div class="booth-title">
-                <span class="logo-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></span>
+                <span class="logo-icon"><img src="icon-rounded.png" alt=""></span>
                 BlueCapture Studio
             </div>
             <span class="studio-label">PHOTO STUDIO</span>
@@ -297,23 +310,6 @@
                 <p class="camera-tip"><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg> Make sure your face is visible and the lighting is good!</p>
             </section>
 
-            <!-- CAPTURED PHOTOS -->
-            <section class="captured-section">
-                <div class="content-title">
-                    <div>
-                        <span class="section-tag">YOUR PHOTOS</span>
-                        <h2>Captured Moments <span id="photoCount">(0/3)</span></h2>
-                    </div>
-                    <button class="text-button" id="retakeButton">Retake All <span class="button-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-refresh"></use></svg></span></button>
-                </div>
-
-                <div class="captured-grid" id="capturedGrid">
-                    <div class="empty-photo">01</div>
-                    <div class="empty-photo">02</div>
-                    <div class="empty-photo">03</div>
-                </div>
-            </section>
-
             <!-- EDITOR -->
             <section class="editor-section hidden" id="editorSection">
                 <div class="section-heading">
@@ -343,8 +339,16 @@
                             <label for="layoutSelect">Photo Layout</label>
                             <select id="layoutSelect">
                                 <option value="3">Classic Strip (3 Photos)</option>
-                                <option value="4">Long Strip (4 Photos)</option>
+                                <option value="6">Two-Column Frame (6 Photos)</option>
                             </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label>Photo Effects</label>
+                            <div class="photo-option-buttons">
+                                <button class="secondary-button" id="mirrorButton" type="button" aria-pressed="true">Mirror Photos: On</button>
+                                <button class="secondary-button" id="roundedButton" type="button" aria-pressed="false">Rounded Photos: Off</button>
+                            </div>
                         </div>
 
                         <div class="control-group">
@@ -371,6 +375,11 @@
                                 <option value="#ffe8d6">Peach</option>
                                 <option value="#dfe8dc">Sage Green</option>
                                 <option value="#fff3c4">Butter Yellow</option>
+                                <option value="gradient-sunset">Pastel Sunset Gradient</option>
+                                <option value="gradient-sky">Pastel Sky Gradient</option>
+                                <option value="gradient-mint">Pastel Mint Gradient</option>
+                                <option value="gradient-peach">Pastel Peach Gradient</option>
+                                <option value="gradient-lavender">Pastel Lavender Gradient</option>
                             </select>
                         </div>
 
@@ -383,6 +392,21 @@
                                 <option value="🌸">Flower 🌸</option>
                                 <option value="🦋">Butterfly 🦋</option>
                                 <option value="✨">Sparkles ✨</option>
+                                <option value="🎈">Balloon 🎈</option>
+                                <option value="☀️">Sun ☀️</option>
+                                <option value="🌈">Rainbow 🌈</option>
+                                <option value="🐻">Teddy Bear 🐻</option>
+                                <option value="🎀">Ribbon 🎀</option>
+                                <option value="🍓">Strawberry 🍓</option>
+                                <option value="🌙">Moon 🌙</option>
+                                <option value="☁️">Cloud ☁️</option>
+                                <option value="🐱">Cat 🐱</option>
+                                <option value="🌼">Daisy 🌼</option>
+                                <option value="😀">Happy Face 😀</option>
+                                <option value="😍">Heart Eyes 😍</option>
+                                <option value="😎">Cool Face 😎</option>
+                                <option value="🥺">Pleading Face 🥺</option>
+                                <option value="😜">Silly Face 😜</option>
                             </select>
                         </div>
 
@@ -404,7 +428,7 @@
     <!-- FOOTER -->
     <footer class="footer">
         <a href="#" class="logo">
-            <span class="logo-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-sparkle"></use></svg></span>
+            <span class="logo-icon"><img src="icon-rounded.png" alt=""></span>
             BlueCapture<span class="logo-dot">.</span>
         </a>
         <p>Made with <svg class="ui-icon" aria-hidden="true"><use href="#icon-heart"></use></svg> for your little moments.</p>
