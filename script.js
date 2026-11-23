@@ -9,7 +9,6 @@ const boothPage = document.getElementById("boothPage");
 const navbar = document.querySelector(".navbar");
 
 const video = document.getElementById("video");
-const cameraView = document.querySelector(".camera-view");
 const cameraPlaceholder = document.getElementById("cameraPlaceholder");
 const cameraStatus = document.getElementById("cameraStatus");
 const shotPreview = document.getElementById("shotPreview");
@@ -177,16 +176,6 @@ captureCountSelect.addEventListener("change", () => {
 // CAMERA
 // =====================================
 
-function syncMobileCameraAspectRatio() {
-    if (window.matchMedia("(max-width: 600px)").matches && video.videoWidth && video.videoHeight) {
-        cameraView.style.aspectRatio = `${video.videoWidth} / ${video.videoHeight}`;
-    } else {
-        cameraView.style.removeProperty("aspect-ratio");
-    }
-}
-
-window.addEventListener("resize", syncMobileCameraAspectRatio);
-
 async function enableCamera() {
     try {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
@@ -199,9 +188,9 @@ async function enableCamera() {
         cameraStream = await navigator.mediaDevices.getUserMedia({
             video: {
                 facingMode: "user",
-                    width: { ideal: 640 },
-                    height: { ideal: 480 },
-                    aspectRatio: { ideal: 4 / 3 }
+                width: { ideal: 640 },
+                height: { ideal: 480 },
+                aspectRatio: { ideal: 4 / 3 }
             },
             audio: false
         });
@@ -209,7 +198,6 @@ async function enableCamera() {
         video.srcObject = cameraStream;
 
         await video.play();
-        syncMobileCameraAspectRatio();
 
         video.style.display = "block";
         cameraPlaceholder.classList.add("hidden");
