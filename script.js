@@ -307,7 +307,10 @@ function takePhoto() {
     const photoContext = canvas.getContext("2d");
     const sourceWidth = video.videoWidth;
     const sourceHeight = video.videoHeight;
-    const scale = Math.min(PHOTO_WIDTH / sourceWidth, PHOTO_HEIGHT / sourceHeight);
+    const cropToFill = window.matchMedia("(max-width: 600px)").matches;
+    const scale = cropToFill
+        ? Math.max(PHOTO_WIDTH / sourceWidth, PHOTO_HEIGHT / sourceHeight)
+        : Math.min(PHOTO_WIDTH / sourceWidth, PHOTO_HEIGHT / sourceHeight);
     const drawWidth = sourceWidth * scale;
     const drawHeight = sourceHeight * scale;
     const drawX = (PHOTO_WIDTH - drawWidth) / 2;
